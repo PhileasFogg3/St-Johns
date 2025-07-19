@@ -11,6 +11,8 @@ function initLinkGenerator() {
         "link-contact": basePath + "contact/"
     };
 
+    console.log(links);
+
     for (const [id, relativePath] of Object.entries(links)) {
         const el = document.getElementById(id);
         if (el) {
