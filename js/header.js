@@ -8,8 +8,8 @@ if (window.location.pathname == "/" || window.location.pathname == "/St-Johns/")
 
     setupTypewriterHero();
     setupMobileNavToggle();
-    highlightCurrentPage();
     initLinkGenerator();
+    highlightCurrentPage();
     displayPageName();
 
   });
@@ -23,8 +23,8 @@ if (window.location.pathname == "/" || window.location.pathname == "/St-Johns/")
 
     setupTypewriterHero();
     setupMobileNavToggle();
-    highlightCurrentPage();
     initLinkGenerator();
+    highlightCurrentPage();
     displayPageName();
 
   });
@@ -103,16 +103,28 @@ function setupMobileNavToggle() {
 }
 
 function highlightCurrentPage() {
-  const currentPath = window.location.pathname.replace(/\/$/, "");
+  const isRoot = window.location.pathname == "/" || window.location.pathname == "/St-Johns/";
+  const isHostname = window.location.hostname != "localhost";
+  const basePath = isRoot ? "./" : "../";
+  const basePathFinal = isHostname ? basePath + "St-Johns/" : basePath;
+
+  const currentUrl = new URL(window.location.href);
+  const currentPath = currentUrl.pathname.replace(/\/$/, ""); // no trailing slash
+
   document.querySelectorAll('a[href]').forEach(link => {
     const href = link.getAttribute('href');
+    if (!href) return;
+
     try {
-      const linkPath = new URL(href, window.location.origin).pathname.replace(/\/$/, "");
+      const resolvedUrl = new URL(href, window.location.origin);
+      const linkPath = resolvedUrl.pathname.replace(/\/$/, "");
+
+      // Check if the paths match
       if (linkPath === currentPath) {
         link.classList.add("active");
       }
     } catch (e) {
-      console.warn("Invalid href for URL():", href);
+      console.warn("Invalid href for URL():", href, e);
     }
   });
 }
