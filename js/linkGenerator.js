@@ -1,6 +1,6 @@
 function initLinkGenerator() {
     const isRoot = window.location.pathname === "/" || window.location.pathname === "/St-Johns/";
-    const basePath = isRoot ? "" : "../";
+    const basePath = isRoot ? "" : "/";
 
     const links = {
         "link-home": basePath,
