@@ -103,28 +103,16 @@ function setupMobileNavToggle() {
 }
 
 function highlightCurrentPage() {
-  const isRoot = window.location.pathname == "/" || window.location.pathname == "/St-Johns/";
-  const isHostname = window.location.hostname != "localhost";
-  const basePath = isRoot ? "./" : "../";
-  const basePathFinal = isHostname ? basePath + "St-Johns/" : basePath;
-
-  const currentUrl = new URL(window.location.href);
-  const currentPath = currentUrl.pathname.replace(/\/$/, ""); // no trailing slash
-
+  const currentPath = window.location.pathname.replace(/\/$/, "");
   document.querySelectorAll('a[href]').forEach(link => {
     const href = link.getAttribute('href');
-    if (!href) return;
-
     try {
-      const resolvedUrl = new URL(href, window.location.origin);
-      const linkPath = resolvedUrl.pathname.replace(/\/$/, "");
-
-      // Check if the paths match
+      const linkPath = new URL(href, window.location.origin).pathname.replace(/\/$/, "");
       if (linkPath === currentPath) {
         link.classList.add("active");
       }
     } catch (e) {
-      console.warn("Invalid href for URL():", href, e);
+      console.warn("Invalid href for URL():", href);
     }
   });
 }

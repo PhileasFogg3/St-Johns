@@ -222,7 +222,7 @@ CSS FOR NAVBAR START
 }
   
 /* Actual border-bottom appears after animation delay */
-.nav-links a.current {
+.nav-links a.active {
     color: #ffffff;
     font-weight: bold;
     border-bottom: 2px solid transparent; /* Layout consistency */
