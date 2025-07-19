@@ -9,6 +9,7 @@ if (window.location.pathname == "/" || window.location.pathname == "/St-Johns/")
     setupTypewriterHero();
     setupMobileNavToggle();
     highlightCurrentPage();
+    initLinkGenerator();
     displayPageName();
 
   });
@@ -23,6 +24,7 @@ if (window.location.pathname == "/" || window.location.pathname == "/St-Johns/")
     setupTypewriterHero();
     setupMobileNavToggle();
     highlightCurrentPage();
+    initLinkGenerator();
     displayPageName();
 
   });
@@ -101,12 +103,16 @@ function setupMobileNavToggle() {
 }
 
 function highlightCurrentPage() {
-  const currentPath = window.location.pathname.replace(/\/$/, '');
-  const navLinks = document.querySelectorAll('.nav-links a');
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href).pathname.replace(/\/$/, '');
-    if (linkPath === currentPath) {
-      link.classList.add('current');
+  const currentPath = window.location.pathname.replace(/\/$/, "");
+  document.querySelectorAll('a[href]').forEach(link => {
+    const href = link.getAttribute('href');
+    try {
+      const linkPath = new URL(href, window.location.origin).pathname.replace(/\/$/, "");
+      if (linkPath === currentPath) {
+        link.classList.add("active");
+      }
+    } catch (e) {
+      console.warn("Invalid href for URL():", href);
     }
   });
 }
