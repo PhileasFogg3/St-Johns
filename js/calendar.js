@@ -132,8 +132,15 @@ const modalDescription = document.getElementById('modalDescription');
 const modalEventList = document.getElementById('modalEventList');
 const closeModal = document.querySelector('.close');
 
-closeModal.onclick = () => modal.style.display = 'none';
-window.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; };
+if (closeModal) {
+  closeModal.onclick = () => modal.style.display = 'none';
+}
+
+if (window && modal) {
+  window.onclick = (e) => {
+    if (e.target === modal) modal.style.display = 'none';
+  };
+}
 
 function openServiceModal(serviceName, descriptionText, calendarId) {
   const matchingEvents = allEvents.filter(event =>
@@ -171,11 +178,11 @@ function openServiceModal(serviceName, descriptionText, calendarId) {
 function createCalendarEventButtons(calendar) {
   const containerId = calendar.id === calendars[0].id ? 'churchEventButtons' : 'communityEventButtons';
   const container = document.getElementById(containerId);
-  if (!container) return;
+  if (!container) return; // Exit if the container doesn't exist on this page
 
-  // Find corresponding <h2> element (assumes <h2> comes just before container)
+  // Try to get the associated <h2> (assumes it's the previous sibling)
   const heading = container.previousElementSibling;
-  if (!heading || heading.tagName !== 'H2') return;
+  if (!heading || heading.tagName !== 'H2') return; // Exit if no heading
 
   container.innerHTML = ''; // Clear previous buttons
   const calendarEvents = filterEventsByCalendar(allEvents, calendar.id);
@@ -183,23 +190,30 @@ function createCalendarEventButtons(calendar) {
   const addedSummaries = new Set();
 
   calendarEvents.forEach(event => {
-    if (addedSummaries.has(event.summary)) return; // Prevent duplicates
+    if (!event.summary || addedSummaries.has(event.summary)) return; // ensure event.summary exists
     addedSummaries.add(event.summary);
-
+  
     const btn = document.createElement('button');
     btn.classList.add('event-btn');
     btn.textContent = event.summary;
     btn.title = `${new Date(event.start.dateTime || event.start.date).toLocaleString()}`;
-
-    btn.onclick = () => {
-      openServiceModal(event.summary, event.description || '', event.calendarId);
-    };    
-
+  
+    // Only set onclick if btn and event are valid
+    if (btn && event.summary) {
+      try {
+        btn.onclick = () => {
+          openServiceModal(event.summary, event.description || '', event.calendarId);
+        };
+      } catch (e) {
+        console.warn('Could not assign onclick for event button:', e);
+      }      
+    }
+  
     container.appendChild(btn);
-  });
+  });  
 
   container.style.display = 'none';
-  heading.style.display = 'none'; // Hide heading too
+  heading.style.display = 'none';
 
   calendarButtonContainers[calendar.id] = { container, heading };
 }
