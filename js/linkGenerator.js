@@ -1,14 +1,16 @@
 function initLinkGenerator() {
     const isRoot = window.location.pathname == "/" || window.location.pathname == "/St-Johns/";
+    const isHostname = window.location.hostname != "localhost";
     const basePath = isRoot ? "./" : "../";
+    const basePathFinal = isHostname ? basePath + "St-Johns" : basePath;
 
     const links = {
-        "link-home": basePath,
-        "link-church": basePath + "church/",
-        "link-community": basePath + "community/",
-        "link-whats-on": basePath + "whats-on/",
-        "link-news": basePath + "news/",
-        "link-contact": basePath + "contact/"
+        "link-home": basePathFinal,
+        "link-church": basePathFinal + "church/",
+        "link-community": basePathFinal + "community/",
+        "link-whats-on": basePathFinal + "whats-on/",
+        "link-news": basePathFinal + "news/",
+        "link-contact": basePathFinal + "contact/"
     };
 
     console.log(links);
