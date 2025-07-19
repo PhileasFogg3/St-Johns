@@ -2,7 +2,7 @@ function initLinkGenerator() {
     const isRoot = window.location.pathname == "/" || window.location.pathname == "/St-Johns/";
     const isHostname = window.location.hostname != "localhost";
     const basePath = isRoot ? "./" : "../";
-    const basePathFinal = isHostname ? basePath + "St-Johns" : basePath;
+    const basePathFinal = isHostname ? basePath + "St-Johns/" : basePath;
 
     const links = {
         "link-home": basePathFinal,
