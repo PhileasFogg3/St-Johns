@@ -1,3 +1,4 @@
+console.log(window.location.pathname);
 if (window.location.pathname == "/") {
 
   fetch("html/header.html")
