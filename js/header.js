@@ -1,5 +1,5 @@
 console.log(window.location.pathname);
-if (window.location.pathname == "/") {
+if (window.location.pathname == "/" || window.location.pathname == "/St-Johns/") {
 
   fetch("html/header.html")
   .then((res) => res.text())

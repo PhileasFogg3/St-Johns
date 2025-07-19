@@ -1,4 +1,4 @@
-if (window.location.pathname == "/") {
+if (window.location.pathname == "/" || window.location.pathname == "/St-Johns/") {
 
   fetch("html/rightSideBar.html")
   .then(response => response.text())
