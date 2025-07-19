@@ -1,4 +1,4 @@
-fetch("https://github.com/PhileasFogg3/St-Johns/html/header.html")
+fetch("/html/header.html")
   .then((res) => res.text())
   .then((html) => {
     document.getElementById("header-placeholder").innerHTML = html;
