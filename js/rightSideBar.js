@@ -4,6 +4,8 @@ if (window.location.pathname == "/" || window.location.pathname == "/St-Johns/")
   .then(response => response.text())
   .then(data => {
     document.getElementById("sidebar-placeholder").innerHTML = data;
+
+    initLinkGenerator();
 });
 
 } else {
@@ -12,6 +14,8 @@ if (window.location.pathname == "/" || window.location.pathname == "/St-Johns/")
   .then(response => response.text())
   .then(data => {
     document.getElementById("sidebar-placeholder").innerHTML = data;
+
+    initLinkGenerator();
   });
 
 }
