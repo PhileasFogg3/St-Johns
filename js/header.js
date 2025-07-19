@@ -1,4 +1,6 @@
-fetch("../html/header.html")
+if (window.location.pathname == "/") {
+
+  fetch("html/header.html")
   .then((res) => res.text())
   .then((html) => {
     document.getElementById("header-placeholder").innerHTML = html;
@@ -9,6 +11,23 @@ fetch("../html/header.html")
     displayPageName();
 
   });
+
+} else {
+
+  fetch("../html/header.html")
+  .then((res) => res.text())
+  .then((html) => {
+    document.getElementById("header-placeholder").innerHTML = html;
+
+    setupTypewriterHero();
+    setupMobileNavToggle();
+    highlightCurrentPage();
+    displayPageName();
+
+  });
+
+}
+
 
 function setupTypewriterHero() {
     const texts = ["Church,", "Community,", "Family,", "St. Johns."];
