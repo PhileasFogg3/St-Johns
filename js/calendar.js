@@ -1,5 +1,6 @@
-const apiKey = 'BLANK';
+let apiKey = '';
 
+function initCalendars() {
 const calendars = [
   {
     id: '1caeeeca11bfb78e255c5f8d2952c8d659b3e07ded752c560c52bda69ebb4b0d@group.calendar.google.com',
@@ -298,3 +299,16 @@ Promise.all(calendars.map(fetchEventsForCalendar))
       allEventsList.innerHTML = '<li>Unable to load events.</li>';
     }
   });
+}
+
+fetch('/config')
+.then(res => res.json())
+.then(config => {
+  apiKey = config.calendarApiKey;
+  initCalendars(); // now that the key is available
+})
+.catch(err => {
+  console.error('Failed to load calendar config:', err);
+  const fallback = document.getElementById('allEventsList');
+  if (fallback) fallback.innerHTML = '<li>Error loading calendar configuration.</li>';
+});
