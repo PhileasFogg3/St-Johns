@@ -46,6 +46,12 @@ function formatDateTime(date) {
   });
 }
 
+function linkify(text) {
+  const urlRegex = /(https:\/\/[^\s]+)/g;
+  return text.replace(urlRegex, url => `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`);
+}
+
+
 function createEventListItem(event) {
   const start = event.start.dateTime || event.start.date;
   const end = event.end.dateTime || event.end.date;
@@ -70,7 +76,7 @@ function createEventListItem(event) {
   details.innerHTML =
     `<p><strong>Time:</strong> ${formatTimeOnly(startDate)} – ${formatTimeOnly(endDate)}</p>` +
     (event.location ? `<p><strong>Location:</strong> ${event.location}</p>` : '') +
-    (event.description ? `<p><strong>Description:</strong> ${event.description}</p>` : '');
+    (event.description ? `<p><strong>Description:</strong> ${linkify(event.description)}</p>` : '')
 
   title.addEventListener('click', () => {
     details.style.display = (details.style.display === 'none') ? 'block' : 'none';
@@ -150,7 +156,7 @@ function openServiceModal(serviceName, descriptionText, calendarId) {
   );
 
   modalTitle.textContent = serviceName;
-  modalDescription.textContent = descriptionText;
+  modalDescription.innerHTML = linkify(descriptionText);
   modalEventList.innerHTML = '';
 
   if (matchingEvents.length === 0) {
