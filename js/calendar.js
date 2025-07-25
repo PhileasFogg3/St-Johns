@@ -1,4 +1,4 @@
-const apiKey = 'AIzaSyBorm3sgJDUzowkyfFbzWdvKUIUChHu7q0';
+const apiKey = 'BLANK';
 
 const calendars = [
   {

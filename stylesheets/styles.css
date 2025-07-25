@@ -87,6 +87,11 @@ CSS FOR FOOTER START
     color: #fff;
 }
 
+.footer-section iframe {
+    width: 150%;
+    height: 100%;
+}
+
 .social-icons {
     display: flex;
     gap: 10px;
