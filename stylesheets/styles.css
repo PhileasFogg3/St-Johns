@@ -88,7 +88,7 @@ CSS FOR FOOTER START
 }
 
 .footer-section iframe {
-    width: 150%;
+    width: 200%;
     height: 100%;
 }
 
@@ -119,6 +119,11 @@ CSS FOR FOOTER START
         margin: 10px 0;
         text-align: center;
     }
+
+    .footer-section iframe {
+    width: 100%;
+    height: 100%;
+}
 }
 /* 
 
@@ -562,6 +567,13 @@ CSS FOR EVENT BUTTONS STARTS
     justify-content: center;
 }
 
+.community-buttons button[style*="background-image"],
+.church-buttons button[style*="background-image"] {
+    background-blend-mode: normal;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
 .community-buttons button:hover,
 .church-buttons button:hover {
     background-color: #1f4da0;
@@ -665,6 +677,13 @@ CSS FOR EVENT BUTTONS STARTS
         height: auto;
         padding: 16px;
         font-size: 1rem;
+    }
+
+    .community-buttons button[style*="background-image"],
+    .church-buttons button[style*="background-image"] {
+        background-size: 80%;
+        background-position: left 30%;
+        padding-top: 80px;
     }
 
     .modal-content {

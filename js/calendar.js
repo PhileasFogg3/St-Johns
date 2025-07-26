@@ -1,6 +1,13 @@
 let apiKey = '';
 
+const knownEventIcons = {
+  // Church Services
+  // Community Events
+  'Tea with Santa': '../resources/img/events/tws.png',
+}
+
 function initCalendars() {
+
 const calendars = [
   {
     id: '1caeeeca11bfb78e255c5f8d2952c8d659b3e07ded752c560c52bda69ebb4b0d@group.calendar.google.com',
@@ -202,7 +209,27 @@ function createCalendarEventButtons(calendar) {
   
     const btn = document.createElement('button');
     btn.classList.add('event-btn');
-    btn.textContent = event.summary;
+    btn.textContent = event.summary; // default
+
+    const iconUrl = knownEventIcons[event.summary];
+    if (iconUrl) {
+      btn.style.backgroundImage = `url('${iconUrl}')`;
+      btn.style.backgroundSize = 'contain';
+      btn.style.backgroundRepeat = 'no-repeat';
+      btn.style.backgroundPosition = 'center';
+      btn.style.color = 'rgba(255, 255, 255, 0.9)';
+      btn.style.textShadow = '1px 1px 3px rgba(0, 0, 0, 0.7)';
+      btn.style.display = 'flex';
+      btn.style.alignItems = 'flex-end';
+      btn.style.justifyContent = 'center';
+      btn.style.padding = '12px';
+
+      if (window.innerWidth < 600) {
+        console.log("Too small for pictures")
+        btn.style.backgroundImage = 'none';
+      }
+    }
+
     btn.title = `${new Date(event.start.dateTime || event.start.date).toLocaleString()}`;
   
     // Only set onclick if btn and event are valid
@@ -313,8 +340,20 @@ fetch('/config')
   apiKey = config.calendarApiKey;
   initCalendars(); // now that the key is available
 })
+
 .catch(err => {
   console.error('Failed to load calendar config:', err);
-  const fallback = document.getElementById('allEventsList');
-  if (fallback) fallback.innerHTML = '<li>Error loading calendar configuration.</li>';
+
+  const fallbackMessages = [
+    { id: 'allEventsList', message: '<li>Error loading calendar configuration. Server offline.</li>' },
+    { id: 'nextChurchEventDisplay', message: 'Unable to load next church event. Server offline.' },
+    { id: 'nextEventDisplay', message: 'Unable to load next community event. Server offline.' },
+    { id: 'churchEventButtons', message: 'Church event buttons could not be loaded. Server offline.' },
+    { id: 'communityEventButtons', message: 'Community event buttons could not be loaded. Server offline.' }
+  ];
+
+  fallbackMessages.forEach(({ id, message }) => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = message;
+  });
 });
