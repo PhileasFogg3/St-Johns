@@ -11,13 +11,17 @@ const PORT = 5500;
 
 const MAILCHIMP_API_KEY = process.env.NEWSLETTER;
 const CALENDAR_API_KEY = process.env.CALENDAR;
+const MAPS_API_KEY = process.env.MAPS;
 const DATACENTER = 'us21';
 const API_URL = `https://${DATACENTER}.api.mailchimp.com/3.0/campaigns`;
 
 app.use(express.static(path.join(__dirname, '..')));
 
 app.get('/config', (req, res) => {
-  res.json({ calendarApiKey: CALENDAR_API_KEY });
+  res.json({ 
+    calendarApiKey: CALENDAR_API_KEY,
+    mapsApiKey: MAPS_API_KEY
+   });
 });
 
 app.get('/latest-newsletter', async (req, res) => {

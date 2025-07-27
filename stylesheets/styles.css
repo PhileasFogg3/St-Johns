@@ -32,6 +32,27 @@ MAIN PAGE START
     margin-bottom: 2em;
     text-align: center;
 }
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.grid-item {
+    background-color: #f0f0f0;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
 /*
 
 MAIN PAGE ENDS
@@ -167,7 +188,9 @@ CSS FOR NAVBAR START
     color: #ccc;
     text-decoration: none;
     font-size: 1rem;
-    transition: color 0.2s;
+    transition: color 0.2s ease;
+    position: relative;
+    padding: 5px 0;
 }
 
 .nav-links a:hover {
@@ -183,15 +206,6 @@ CSS FOR NAVBAR START
     cursor: pointer;
 }
 
-/* Base link styling */
-.nav-links a {
-    position: relative;
-    color: #ccc;
-    text-decoration: none;
-    padding: 5px 0;
-    transition: color 0.3s ease;
-}
-  
 /* Hover style */
 .nav-links a::after {
     content: "";
@@ -204,10 +218,6 @@ CSS FOR NAVBAR START
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s ease;
-}
-  
-.nav-links a:hover {
-    color: #fff;
 }
   
 .nav-links a:hover::after {
@@ -363,6 +373,7 @@ CSS FOR RIGHT-SIDEBAR START
     padding: 20px;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.05);
     font-family: sans-serif;
+    text-align: center;
 }
 
 .sidebar-title {
@@ -385,10 +396,6 @@ CSS FOR RIGHT-SIDEBAR START
     display: inline-block;
     max-width: 50%;
     max-height: 50%;
-}
-
-.sidebar-right  {
-    text-align: center;
 }
 
 .sidebar-section {

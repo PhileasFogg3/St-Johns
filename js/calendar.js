@@ -1,4 +1,5 @@
-let apiKey = '';
+let calendarApiKey = '';
+let mapsApiKey = '';
 
 const knownEventIcons = {
   // Church Services
@@ -30,7 +31,7 @@ let allEvents = [];
 const calendarButtonContainers = {}; // Tracks container for each calendar's event buttons
 
 function fetchEventsForCalendar(calendar) {
-  const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendar.id)}/events?key=${apiKey}&timeMin=${now}&singleEvents=true&orderBy=startTime`;
+  const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendar.id)}/events?key=${calendarApiKey}&timeMin=${now}&singleEvents=true&orderBy=startTime`;
   return fetch(url)
     .then(response => response.json())
     .then(data => (data.items || []).map(event => ({
@@ -166,6 +167,11 @@ function openServiceModal(serviceName, descriptionText, calendarId) {
   modalDescription.innerHTML = linkify(descriptionText);
   modalEventList.innerHTML = '';
 
+  const modalMapContainer = document.getElementById('modalMapContainer');
+  if (modalMapContainer) modalMapContainer.innerHTML = ''; // clear previous
+
+  let mapInserted = false;
+
   if (matchingEvents.length === 0) {
     modalEventList.innerHTML = '<li>No matching events found.</li>';
   } else {
@@ -174,6 +180,18 @@ function openServiceModal(serviceName, descriptionText, calendarId) {
       const start = new Date(event.start.dateTime || event.start.date);
       let location = event.location || '';
 
+      if (!mapInserted && location && modalMapContainer) {
+        const heading = document.createElement('h3');
+        heading.textContent = 'Find Us';
+        heading.style.marginTop = '1em';
+
+        const iframe = createGoogleMapsEmbed(location);
+        modalMapContainer.appendChild(heading);
+        modalMapContainer.appendChild(iframe);
+        mapInserted = true;
+      }
+
+      // Optional alias/friendly name override
       if (location === "St John (Ellesmere) Community Centre, Algernon Rd, Walkden, Worsley, Manchester M28 3RE, UK") {
         location = "Community Centre";
       }
@@ -334,11 +352,25 @@ Promise.all(calendars.map(fetchEventsForCalendar))
   });
 }
 
+function createGoogleMapsEmbed(address) {
+  const iframe = document.createElement('iframe');
+  iframe.width = "100%";
+  iframe.height = "300";
+  iframe.style.border = "0";
+  iframe.loading = "lazy";
+  iframe.referrerPolicy = "no-referrer-when-downgrade";
+
+  iframe.src = `https://www.google.com/maps/embed/v1/place?key=${mapsApiKey}&q=${encodeURIComponent(address)}`;
+
+  return iframe;
+}
+
 fetch('/config')
 .then(res => res.json())
 .then(config => {
-  apiKey = config.calendarApiKey;
-  initCalendars(); // now that the key is available
+  calendarApiKey = config.calendarApiKey;
+  mapsApiKey = config.mapsApiKey;
+  initCalendars();
 })
 
 .catch(err => {
