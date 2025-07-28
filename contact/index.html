@@ -13,7 +13,57 @@
 
     <div class="page-content">
         <main class="main-content">
-            <p>CONTACT</p>
+            <div class="text-box-container">
+                <div class="text-item">
+                    <p>FORM IS NOT YET FUNCTIONAL - ONCE A DOMAIN HAS BEEN PURCHASED IT WILL WORK!! You can test by sending a form to the "Test" department, Philip will receive an email.</p>
+                </div>
+            </div>
+            <p class="intro"></p>
+            <div class="contact-section">
+                <form id="contact-form" method="POST">
+                <label for="name">Name: *</label>
+                <input type="text" id="name" name="name" required />
+
+                <label for="email">Email: *</label>
+                <input type="email" id="email" name="email" required />
+
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" />
+
+                <label for="department">Department: *</label>
+                <select id="department" name="department" required>
+                    <option value="" disabled selected>Select department</option>
+                    <option value="events">Events</option>
+                    <option value="bookings">Bookings</option>
+                    <option value="church">Church</option>
+                    <option value="test">Test</option>
+                </select>
+
+                <label for="message">Message: *</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+
+                <p>Items marked with a * are required.</p>
+
+                <!-- Honeypot for spam protection -->
+                <input type="text" name="_honey" class="hidden">
+
+                <!-- CAPTCHA enabled (FormSubmit default) -->
+                <!-- Don't include _captcha=false, keep CAPTCHA on -->
+
+                <!-- Redirect on success -->
+                <input type="hidden" name="_next" value="http://localhost:5500/thank-you/"> <!-- TO DO -->
+
+                <button type="submit">Send Message</button>
+                </form>
+            </div>
+
+            <div class="text-box-container">
+              <div class="text-item">
+                <p>By sending us a message, you agree to St. Johns's Church and Community Centre storing your data, securely, in accordance with GDPR laws. Your data will only be held for us to communicate with you and will not be passed on, or sold to any other 3rd party.</p>
+                <a href="https://formsubmit.co/">This form is powered by formsubmit.co</a>
+              </div>
+            </div>
+
         </main>
         <aside id="sidebar-placeholder" class="sidebar-wrapper"></aside>
     </div>
@@ -26,5 +76,6 @@
     <script src="../js/rightSideBar.js"></script>
     <script src="../js/calendar.js"></script>
     <script src="../js/linkGenerator.js"></script>
+    <script src="../js/contactForm.js"></script>
 </body>
 </html>

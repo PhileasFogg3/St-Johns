@@ -51,8 +51,71 @@ MAIN PAGE START
     justify-content: center;
     align-items: center;
     font-size: 1.5rem;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        height: auto;
+    }
+
+    .grid-item {
+        font-size: 1.2rem;
+        padding: 15px;
+    }
+}
+
+/* Extra small screens (phones) */
+@media (max-width: 480px) {
+    .grid-item {
+        font-size: 1rem;
+        padding: 10px;
+    }
+}
+
+.text-box-container {
+    display: grid;
+    gap: 30px;
+    padding-bottom: 20px;
+    padding-top: 10px;
+    box-sizing: border-box;
+}
+
+/* Let the height adjust naturally on smaller screens */
+@media (max-width: 768px) {
+    .text-box-container {
+        height: auto;
+        padding: 10px;
+    }
+}
+
+.text-item {
+    background-color: #f0f0f0;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.text-item a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.text-item a:hover {
+    color: #b22222;
+}
+
 /*
 
 MAIN PAGE ENDS
@@ -368,8 +431,9 @@ CSS FOR RIGHT-SIDEBAR START
 }
 
 .sidebar-right {
-    background-color: #f4f4f4;
+    background-color: #f0f0f0;
     border-left: 2px solid #ccc;
+    border-radius: 12px;
     padding: 20px;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.05);
     font-family: sans-serif;
@@ -378,7 +442,7 @@ CSS FOR RIGHT-SIDEBAR START
 
 .sidebar-title {
     text-align: center;
-    border-bottom: 1px solid #252590;
+    border-bottom: 1px solid #5c5cd0;
 }
 
 .sidebar-right a {
@@ -402,6 +466,37 @@ CSS FOR RIGHT-SIDEBAR START
     border-bottom: 1px solid #252590;
     padding-bottom: 2px;
     margin-bottom: 10px;
+}
+
+.sidebar-social-section {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.social.icons-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.social-item {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+.social-icons-sidebar img {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+    margin-right: 10px;
+    flex-shrink: 0;
+    display: block;
+}
+
+.social-icons-sidebar img:hover {
+    transform: scale(1.2);
 }
 
 /* Responsive: Hide sidebar on smaller screens */
@@ -701,5 +796,70 @@ CSS FOR EVENT BUTTONS STARTS
 /* 
 
 CSS FOR EVENT BUTTONS ENDS
+
+*/
+
+/* 
+
+CSS FOR CONTACT FORM STARTS
+
+*/
+
+.contact-section {
+    font-family: sans-serif;
+    background: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+}
+
+.contact-section form {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+}
+
+.contact-section label {
+    display: block;
+    margin-top: 1rem;
+    font-weight: bold;
+}
+
+.contact-section input,
+.contact-section select,
+.contact-section textarea,
+.contact-section button {
+    width: 100%;
+    padding: 0.7rem;
+    margin-top: 0.3rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.contact-section button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    margin-top: 1.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.contact-section button:hover {
+    background-color: #0056b3;
+}
+
+.contact-section .hidden {
+    display: none;
+}
+
+/* 
+
+CSS FOR CONTACT FORM ENDS
 
 */

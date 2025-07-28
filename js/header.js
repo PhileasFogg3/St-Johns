@@ -128,7 +128,9 @@ function displayPageName() {
     "community": "Community",
     "church": "Church",
     "news": "News",
-    "home": "St John's Church and Community Centre"
+    "home": "St John's Church and Community Centre",
+    "thank-you": "Thank You!",
+    "safeguarding": "Safeguarding Policy"
   };
 
   const path = window.location.pathname;
