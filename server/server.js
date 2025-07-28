@@ -15,14 +15,14 @@ const MAPS_API_KEY = process.env.MAPS;
 const DATACENTER = 'us21';
 const API_URL = `https://${DATACENTER}.api.mailchimp.com/3.0/campaigns`;
 
-app.get('../config', (req, res) => {
+app.get('/config', (req, res) => {
   res.json({ 
     calendarApiKey: CALENDAR_API_KEY,
     mapsApiKey: MAPS_API_KEY
    });
 });
 
-app.get('../latest-newsletter', async (req, res) => {
+app.get('/latest-newsletter', async (req, res) => {
   try {
     const response = await axios.get(API_URL, {
       headers: {
