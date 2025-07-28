@@ -442,7 +442,7 @@ CSS FOR RIGHT-SIDEBAR START
 
 .sidebar-title {
     text-align: center;
-    border-bottom: 1px solid #5c5cd0;
+    border-bottom: 1px solid #1e1e2f;
 }
 
 .sidebar-right a {
@@ -463,7 +463,7 @@ CSS FOR RIGHT-SIDEBAR START
 }
 
 .sidebar-section {
-    border-bottom: 1px solid #252590;
+    border-bottom: 1px solid #1e1e2f;
     padding-bottom: 2px;
     margin-bottom: 10px;
 }
