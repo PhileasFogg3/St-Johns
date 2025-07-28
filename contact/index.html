@@ -24,8 +24,8 @@
                 <label for="name">Name: *</label>
                 <input type="text" id="name" name="name" required />
 
-                <label for="email">Email: *</label>
-                <input type="email" id="email" name="email" required />
+                <label for="email">Email: </label>
+                <input type="email" id="email" name="email" />
 
                 <label for="phone">Phone Number:</label>
                 <input type="tel" id="phone" name="phone" />
@@ -43,15 +43,13 @@
                 <textarea id="message" name="message" rows="5" required></textarea>
 
                 <p>Items marked with a * are required.</p>
+                <p>Note, that while neither an email address or phone number are required, we <strong>cannot</strong> reply to your message if you don't provide one.</p>
 
                 <!-- Honeypot for spam protection -->
                 <input type="text" name="_honey" class="hidden">
 
-                <!-- CAPTCHA enabled (FormSubmit default) -->
-                <!-- Don't include _captcha=false, keep CAPTCHA on -->
-
                 <!-- Redirect on success -->
-                <input type="hidden" name="_next" value="http://philipbeswick.com/stjohns/thank-you/"> <!-- TO DO -->
+                <input type="hidden" name="_next" value="http://philipbeswick.com/thank-you/"> <!-- TO DO -->
 
                 <button type="submit">Send Message</button>
                 </form>
