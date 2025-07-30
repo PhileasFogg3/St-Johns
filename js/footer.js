@@ -5,7 +5,6 @@ if (window.location.pathname == "/" || window.location.pathname == "/St-Johns/")
   .then(data => {
     document.getElementById("footer-placeholder").innerHTML = data;
 
-    initLinkGenerator();
 });
 
 } else {
@@ -15,7 +14,6 @@ if (window.location.pathname == "/" || window.location.pathname == "/St-Johns/")
   .then(data => {
     document.getElementById("footer-placeholder").innerHTML = data;
 
-    initLinkGenerator();
   });
 
 }

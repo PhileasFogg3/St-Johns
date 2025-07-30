@@ -8,7 +8,6 @@ if (window.location.pathname == "/" || window.location.pathname == "/St-Johns/")
 
     setupTypewriterHero();
     setupMobileNavToggle();
-    initLinkGenerator();
     highlightCurrentPage();
     displayPageName();
 
@@ -23,7 +22,6 @@ if (window.location.pathname == "/" || window.location.pathname == "/St-Johns/")
 
     setupTypewriterHero();
     setupMobileNavToggle();
-    initLinkGenerator();
     highlightCurrentPage();
     displayPageName();
 
