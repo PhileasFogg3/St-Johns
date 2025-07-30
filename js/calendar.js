@@ -55,8 +55,27 @@ function formatDateTime(date) {
 }
 
 function linkify(text) {
-  const urlRegex = /(https:\/\/[^\s]+)/g;
-  return text.replace(urlRegex, url => `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`);
+  // Convert double dash to <br>
+  text = text.replace(/--/g, '<br>');
+
+  // Convert URLs
+  text = text.replace(/(https:\/\/[^\s]+)/g, url => {
+    return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+  });
+
+  // Convert email addresses
+  text = text.replace(/\b([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})\b/g, email => {
+    return `<a href="mailto:${email}">${email}</a>`;
+  });
+
+  // Convert phone numbers (simple match for common formats)
+  text = text.replace(/\b(\+?\d[\d\s().-]{7,}\d)\b/g, phone => {
+    // Remove spaces, parentheses, and dashes for the href
+    const telHref = phone.replace(/[\s().-]/g, '');
+    return `<a href="tel:${telHref}">${phone}</a>`;
+  });
+
+  return text;
 }
 
 
