@@ -341,7 +341,6 @@ function initCalendars() {
     });
 }
 
-// 👇 Proxy-based maps embed
 function createGoogleMapsEmbed(address) {
   return fetch(`/api/map-embed?address=${encodeURIComponent(address)}`)
     .then(res => res.json())
