@@ -5,6 +5,7 @@ const departmentEmails = {
 events: "events@example.com",
 bookings: "bookings@example.com",
 church: "church@example.com",
+safeguarding: "safeguarding@example.com",
 test: "philip.beswick@hotmail.com"
 };
 
