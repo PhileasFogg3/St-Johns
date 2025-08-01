@@ -129,9 +129,18 @@ function initCalendars() {
       }
 
       container.innerHTML =
-        `<b>${nextEvent.summary}</b><br>` +
+        `<b><span class="event-summary">${nextEvent.summary}</span></b><br>` +
         `<b>When</b>: ${timeString}<br>` +
         (location ? `<b>Location:</b> ${location}<br>` : '');
+
+      // Add event listener to open modal when event summary is clicked
+      const eventSummary = container.querySelector('.event-summary');
+      if (eventSummary) {
+        eventSummary.style.cursor = 'pointer';
+        eventSummary.addEventListener('click', () => {
+          openServiceModal(nextEvent.summary, nextEvent.description || '', nextEvent.calendarId);
+        });
+      }
     } else {
       container.textContent = `No upcoming events found for ${calendarName}.`;
     }

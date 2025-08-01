@@ -480,6 +480,25 @@ CSS FOR HERO ENDS
 CSS FOR RIGHT-SIDEBAR START
 
 */
+
+#nextEventDisplay span {
+    color: #333;
+    font-weight: bold;
+}
+
+#nextEventDisplay span:hover {
+    color: #b22222;
+}
+
+#nextChurchEventDisplay span {
+    color: #333;
+    font-weight: bold;
+}
+
+#nextChurchEventDisplay span:hover {
+    color: #b22222;
+}
+
 .sidebar-wrapper {
     width: 220px;
     display: flex;
