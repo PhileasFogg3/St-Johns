@@ -621,6 +621,54 @@ CSS FOR NEWS FEED START
     margin-bottom: 0.5em;
     border-radius: 6px;
 }
+
+.read-more {
+  display: inline-block;
+  margin-top: 0.5em;
+  padding: 0.4em 0.8em;
+  background-color: #4a90e2;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+#rss-feed a {
+    color: white;
+}
+
+.read-more:hover {
+  background-color: #357ABD;
+  transform: scale(1.05);
+}
+
+#pagination-controls {
+  text-align: center;
+  margin-top: 1em;
+}
+
+.page-btn {
+  display: inline-block;
+  margin: 0 0.3em;
+  padding: 0.4em 0.8em;
+  background-color: #eee;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.page-btn:hover {
+  background-color: #ccc;
+  transform: scale(1.05);
+}
+
+.page-btn.active {
+  background-color: #4a90e2;
+  color: white;
+}
+
 /* 
 
 CSS FOR NEWS FEED ENDS
