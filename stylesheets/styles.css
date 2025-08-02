@@ -57,6 +57,12 @@ html, body {
     box-sizing: border-box;
 }
 
+.grid-container.whats-on {
+    height: 80vh;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+}
+
 .grid-item {
     background-color: #f0f0f0;
     border-radius: 12px;
@@ -143,6 +149,12 @@ html, body {
 /* Responsive tweaks */
 @media (max-width: 768px) {
     .grid-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        height: auto;
+    }
+
+    .grid-container.whats-on {
         grid-template-columns: 1fr;
         grid-template-rows: auto;
         height: auto;
