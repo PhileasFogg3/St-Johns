@@ -20,13 +20,28 @@
             </div>
             <p class="intro"></p>
 
-            <h2>Select which events you want to see</h2>
-            
-            <div id="calendarFilterButtons"></div>
+            <div class="text-box-container">
+              <div class="text-item">
+                <h2>Select which events you want to see</h2>
+                
+                <div id="calendarFilterButtons"></div>
 
-            <h2>Church Services</h2>
-            <div id="churchEventButtons" class="church-buttons"></div>
-              
+                <h2>Church Services</h2>
+                <div id="churchEventButtons" class="church-buttons"></div>
+
+                <h2>Community Events</h2>
+                <div id="communityEventButtons" class="community-buttons"></div>
+
+              </div>
+            </div>
+
+            <div class="text-box-container">
+              <div class="text-item">
+                <h2>Parish Newsletter</h2>
+                <iframe id="newsletterFrame" width="100%" height="800px" style="border:0;"></iframe>
+              </div>
+            </div>
+
               <!-- Modal -->
               <div id="serviceModal" class="modal">
                 <div class="modal-content">
@@ -37,12 +52,6 @@
                   <div id="modalMapContainer" style="margin-top: 1em;"></div>
                 </div>
               </div>
-
-              <h2>Community Events</h2>
-              <div id="communityEventButtons" class="community-buttons"></div>
-
-              <h2>Parish Newsletter</h2>
-              <iframe id="newsletterFrame" width="100%" height="800px" style="border:0;"></iframe>
 
         </main>
         <aside id="sidebar-placeholder" class="sidebar-wrapper"></aside>
