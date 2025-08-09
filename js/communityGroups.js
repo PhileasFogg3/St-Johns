@@ -1,7 +1,7 @@
 function initGroups() {
     const groupButtonsContainer = document.getElementById('communityGroupButtons');
     const modal = document.getElementById('groupModal');
-    const closeModal = document.getElementById('closeGroupModal');
+    const closeModal = document.querySelector('.closeGroup');
 
     const modalTitle = document.getElementById('groupModalTitle');
     const modalIntro = document.getElementById('groupModalIntro');

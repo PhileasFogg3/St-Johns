@@ -885,8 +885,23 @@ CSS FOR EVENT BUTTONS STARTS
     transition: color 0.2s ease;
 }
 
+.closeGroup {
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
 .close:hover,
 .close:focus {
+    color: #e00;
+    outline: none;
+}
+
+.closeGroup:hover,
+.closeGroup:focus {
     color: #e00;
     outline: none;
 }
