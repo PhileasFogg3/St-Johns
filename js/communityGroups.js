@@ -8,6 +8,7 @@ function initGroups() {
     const modalEmail = document.getElementById('groupModalEmail');
     const modalPhone = document.getElementById('groupModalPhone');
     const modalSubs = document.getElementById('groupModalSubs');
+    const modalMeet = document.getElementById('groupModalMeetingTime');
     const modalSlideshow = document.getElementById('modalImageSlideshow');
 
     if (!groupButtonsContainer) return;
@@ -38,6 +39,8 @@ function initGroups() {
         ? `<a href="tel:${group.ContactPhoneNumber.replace(/\\s+/g, '')}">${group.ContactPhoneNumber}</a>`
         : '';
         modalSubs.textContent = group.SubsCost || '';
+
+        modalMeet.textContent = group.MeetingTime || '';
 
         // Build slideshow
         modalSlideshow.innerHTML = '';
