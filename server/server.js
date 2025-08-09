@@ -75,6 +75,53 @@ app.get('/api/map-embed', (req, res) => {
   res.json({ embedUrl });
 });
 
+app.get('/api/groups', async (req, res) => {
+  const spreadsheetId = '148IESn6GFRrB1mGQVzAXlEnkXXynkfBd1d5jrEyTegI';
+  const sheetsUrl = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}?key=${CALENDAR_API_KEY}`;
+
+  try {
+    // Get metadata (list of all tabs)
+    const metadata = await axios.get(sheetsUrl);
+    const sheetNames = metadata.data.sheets.map(s => s.properties.title);
+
+    const groupPromises = sheetNames.map(async (sheetName) => {
+      if (sheetName.toLowerCase() === 'template') {
+        return null; // skip the Template sheet
+      }
+
+      const rangeUrl = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${encodeURIComponent(sheetName)}?key=${CALENDAR_API_KEY}`;
+      const sheetData = await axios.get(rangeUrl);
+
+      const values = sheetData.data.values || [];
+      const group = {
+        name: sheetName, // always present for frontend buttons
+        images: []
+      };
+
+      // Convert rows to key-value pairs
+      values.forEach(([field, value]) => {
+        if (!field) return;
+        const cleanKey = field.replace(/\s+/g, ''); // remove spaces
+        if (field.toLowerCase().startsWith('image')) {
+          if (value) group.images.push(value.trim());
+        } else {
+          group[cleanKey] = value || '';
+        }
+      });
+
+      return group;
+    });
+
+    let groups = await Promise.all(groupPromises);
+    groups = groups.filter(Boolean); // remove skipped nulls
+    res.json(groups);
+
+  } catch (err) {
+    console.error('Groups API error:', err.message);
+    res.status(500).json({ error: 'Failed to fetch groups data' });
+  }
+});
+
 app.use(express.static(path.join(__dirname, '..')));
 
 app.listen(PORT, () => {

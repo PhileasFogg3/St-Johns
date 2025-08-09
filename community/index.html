@@ -13,23 +13,44 @@
 
     <div class="page-content">
         <main class="main-content">
-            <div class="grid-container">
-              <div class="grid-item">Lorem ipsum dolor sit amet consectetur adipisicing elit. At velit voluptatum ipsam laudantium nihil perferendis id in sed commodi reprehenderit rem tenetur ratione, eaque architecto nulla quis impedit nam inventore?</div>
-              <div class="grid-item">An image can go here</div>
-              <div class="grid-item">An image can go here</div>
-              <div class="grid-item">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid magnam sunt eos amet doloremque maxime! Tenetur, maiores voluptatum reiciendis doloribus, quibusdam molestiae praesentium corrupti non pariatur temporibus perspiciatis dignissimos doloremque.</div>
-            </div>
 
-            <!-- Modal -->
-            <div id="serviceModal" class="modal">
-              <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2 id="modalTitle"></h2>
-                <p id="modalDescription"></p>
-                <ul id="modalEventList"></ul>
-                <div id="modalMapContainer" style="margin-top: 1em;"></div>
-              </div>
+          <div class="text-box-container">
+            <div class="text-item">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam saepe necessitatibus ex sed nulla quis iure inventore, nobis non! Dolor ullam laborum corporis eveniet. Sequi perferendis perspiciatis culpa eligendi nemo!</p>
             </div>
+          </div>
+          <p class="intro"></p>
+
+          <div class="text-box-container">
+            <div class="text-item">
+              <h2>Find out more about all the groups who use our community centre!</h2>
+              <div id="communityGroupButtons" class="community-buttons"></div>
+            </div>
+          </div>
+
+          <!-- Group Modal -->
+          <div id="groupModal" class="modal">
+            <div class="modal-content">
+              <span class="close" id="closeGroupModal">&times;</span>
+              <h2 id="groupModalTitle"></h2>
+              <p id="groupModalIntro"></p>
+              <p><strong>Email:</strong> <span id="groupModalEmail"></span></p>
+              <p><strong>Phone:</strong> <span id="groupModalPhone"></span></p>
+              <p><strong>Subs Cost:</strong> <span id="groupModalSubs"></span></p>
+              <div id="modalImageSlideshow" class="image-slideshow"></div>
+            </div>
+          </div>
+          
+          <!-- Modal -->
+          <div id="serviceModal" class="modal">
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <h2 id="modalTitle"></h2>
+              <p id="modalDescription"></p>
+              <ul id="modalEventList"></ul>
+              <div id="modalMapContainer" style="margin-top: 1em;"></div>
+            </div>
+          </div>
 
         </main>
         <aside id="sidebar-placeholder" class="sidebar-wrapper"></aside>
@@ -42,5 +63,6 @@
     <script src="../js/header.js"></script>
     <script src="../js/rightSideBar.js"></script>
     <script src="../js/calendar.js"></script>
+    <script src="../js/communityGroups.js"></script>
 </body>
 </html>

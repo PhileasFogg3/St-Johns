@@ -1001,3 +1001,48 @@ CSS FOR CONTACT FORM STARTS
 CSS FOR CONTACT FORM ENDS
 
 */
+
+/* 
+
+CSS FOR SLIDESHOW BUTTONS STARTS
+
+*/
+
+.image-slideshow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .image-slideshow img {
+    max-width: 80%;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+  
+  .image-slideshow button {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+  }
+  
+  .image-slideshow button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+    transform: scale(1.05);
+  }
+  
+  .image-slideshow button:active {
+    transform: scale(0.95);
+  }
+
+/* 
+
+CSS FOR SLIDESHOW BUTTONS ENDS
+
+*/
