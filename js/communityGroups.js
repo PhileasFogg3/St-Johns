@@ -63,7 +63,7 @@ function initGroups() {
     function createImageSlideshow(urls, containerId) {
         const container = document.getElementById(containerId);
         container.innerHTML = '';
-        if (!urls.length) return container.textContent = 'No images available.';
+        if (!urls.length) return container.textContent = 'This group does not have any public images.';
       
         let index = 0;
         const img = document.createElement('img');
