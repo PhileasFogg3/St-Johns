@@ -601,6 +601,44 @@ CSS FOR RIGHT-SIDEBAR START
     transform: scale(1.2);
 }
 
+.minimlButton {
+    background-color: #4a90e2;
+    border: none;
+    color: white;
+    padding: 5 9px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.25s ease, transform 0.15s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+.minimlButton:hover {
+    background-color: #357ABD;
+    transform: scale(1.05);
+}
+
+.price-section {
+    margin-bottom: 1.5rem;
+}
+
+.price-title {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #444;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.3rem;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+li { margin-bottom: 0.3rem; }
+.flavours { color: #666; font-size: 0.9em; }
+
 /* Responsive: Hide sidebar on smaller screens */
 @media (max-width: 768px) {
     .page-content {

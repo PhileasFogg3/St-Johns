@@ -122,6 +122,50 @@ app.get('/api/groups', async (req, res) => {
   }
 });
 
+app.get('/api/miniml', async (req, res) => {
+  const spreadsheetId = '1jY27u9J7ONm4oR_Ca50bjYDPDCZfMQeQwXjgxpScKS0';
+  const sheetsUrl = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}?key=${CALENDAR_API_KEY}`;
+
+  try {
+    // Get all sheet names
+    const metadata = await axios.get(sheetsUrl);
+    const sheetNames = metadata.data.sheets.map(s => s.properties.title);
+
+    const priceSheets = sheetNames.map(async (sheetName) => {
+      if (sheetName.toLowerCase() === 'template') return null;
+
+      const rangeUrl = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${encodeURIComponent(sheetName)}?key=${CALENDAR_API_KEY}`;
+      const sheetData = await axios.get(rangeUrl);
+      const values = sheetData.data.values || [];
+
+      // Expect columns: Products | Flavours
+      const rows = values.slice(1).map(row => {
+        const product = row[0]?.trim() || '';
+        const flavourString = row[1]?.trim() || '';
+        const flavours = flavourString
+          ? flavourString.split(',').map(f => f.trim()).filter(Boolean)
+          : [];
+        return { product, flavours };
+      });
+
+      return {
+        price: sheetName, // sheet name = price label
+        items: rows.filter(r => r.product) // skip blank rows
+      };
+    });
+
+    let data = await Promise.all(priceSheets);
+    data = data.filter(Boolean);
+
+    res.json(data);
+
+  } catch (err) {
+    console.error('MiniML API error:', err.message);
+    res.status(500).json({ error: 'Failed to fetch MiniML data' });
+  }
+});
+
+
 app.use(express.static(path.join(__dirname, '..')));
 
 app.listen(PORT, () => {
