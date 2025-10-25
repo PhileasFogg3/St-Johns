@@ -2,11 +2,10 @@ const form = document.getElementById('contact-form');
 const departmentSelect = document.getElementById('department');
 
 const departmentEmails = {
-events: "events@example.com",
-bookings: "bookings@example.com",
-church: "church@example.com",
-safeguarding: "safeguarding@example.com",
-test: "philip.beswick@hotmail.com"
+events: "events@stjohnschurchcommunity.org",
+enquiries: "enquiries@stjohnschurchcommunity.org",
+church: "church@stjohnschurchcommunity.org",
+safeguarding: "safeguarding@stjohnschurchcommunity.org",
 };
 
 form.addEventListener('submit', function (e) {
