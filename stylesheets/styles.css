@@ -269,6 +269,18 @@ CSS FOR FOOTER START
     transform: scale(1.2);
 }
 
+.footer-section.contact a {
+  /* your styles here */
+    color: #ccc;
+    font-weight: bold;
+}
+
+.footer-section.contact a:hover {
+  /* your styles here */
+    color: #fff;
+}
+
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .footer-container {
@@ -1108,5 +1120,76 @@ CSS FOR SLIDESHOW BUTTONS STARTS
 /* 
 
 CSS FOR SLIDESHOW BUTTONS ENDS
+
+*/
+/* 
+
+CSS FOR MUSIC DATABASE STARTS
+
+*/
+/* Matching style for search box and dropdown */
+#songSelect,
+#songSearch {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  padding: 0.5em;
+  margin: 0.5em auto;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  font-size: 1em;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+#songSelect:hover,
+#songSearch:hover {
+  background-color: #e6f0ff;
+  transform: scale(1.02);
+}
+
+#songSelect:focus,
+#songSearch:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 4px rgba(74, 144, 226, 0.5);
+}
+
+/* Search results dropdown */
+#searchResults {
+  display: none;
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  list-style: none;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+#searchResults li {
+  padding: 0.5em 1em;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#searchResults li:hover {
+  background-color: #e6f0ff;
+}
+
+/* Add padding below for spacing */
+#result {
+  padding-top: 1em;
+}
+
+
+/* 
+
+CSS FOR MUSIC DATABASE ENDS
 
 */

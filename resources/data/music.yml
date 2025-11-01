@@ -1,0 +1,26 @@
+boxes:
+  box_one:
+    disc_one:
+    - title: 'Go tell it on the Mountain'
+      link: 'https://open.spotify.com/track/5HPIg89L5vAPAeGOdnfWbD?si=01d2c00a537d48dd'
+    - 'Meekness and Majesty'
+    - 'Shine Jesus Shine'
+    - 'I vow to thee my Country'
+    disc_two:
+    - title: 'All Things Bright and Beautiful'
+      link: 'https://youtu.be/FT_oDqOEGpc?si=2RSB8SRAHIDxyCaY'
+    - 'Colours of Day'
+    - 'As the Deer Pants'
+    - 'My God is so Big'
+  box_two:
+    disc_one:
+    - 'Give me Oil in my Lamp'
+    - 'This Little Light of Mine'
+    - 'Calypso Carol'
+    - 'Away in a Manger'
+    disc_two:
+    - title: 'Go tell it on the Mountain'
+      link: 'https://youtu.be/72LE487YZ-U?si=rQhBes8MkM1tJsyP'
+    - 'The Lords my Shepard'
+    - 'Jubilate'
+    - 'Shine Jesus Shine'
