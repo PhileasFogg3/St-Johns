@@ -9,6 +9,13 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 const app = express();
 const PORT = 5500;
 
+const fs = require('fs');
+const yaml = require('js-yaml');
+const PLAYLIST_FILE = path.join(__dirname, '../resources/data/playlists.yml');
+
+app.use(express.json());
+
+
 const MAILCHIMP_API_KEY = process.env.NEWSLETTER;
 const CALENDAR_API_KEY = process.env.CALENDAR;
 const MAPS_API_KEY = process.env.MAPS;
@@ -167,6 +174,21 @@ app.get('/api/miniml', async (req, res) => {
 
 
 app.use(express.static(path.join(__dirname, '..')));
+
+app.post('/api/save-playlists', (req, res) => {
+  const playlists = req.body.playlists;
+  if (!playlists) return res.status(400).json({ error: 'No playlists provided' });
+
+  try {
+    const yamlStr = yaml.dump(playlists);
+    fs.writeFileSync(PLAYLIST_FILE, yamlStr, 'utf8');
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Error saving playlists:', err.message);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 
 app.listen(PORT, () => {
   console.log(`St Johns Server is running on http://localhost:${PORT}`);

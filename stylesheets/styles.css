@@ -1128,6 +1128,7 @@ CSS FOR MUSIC DATABASE STARTS
 
 */
 /* Matching style for search box and dropdown */
+#playlistSelect,
 #songSelect,
 #songSearch {
   display: block;
@@ -1142,12 +1143,14 @@ CSS FOR MUSIC DATABASE STARTS
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
+#playlistSelect:hover,
 #songSelect:hover,
 #songSearch:hover {
   background-color: #e6f0ff;
   transform: scale(1.02);
 }
 
+#playlistSelect:focus,
 #songSelect:focus,
 #songSearch:focus {
   outline: none;
@@ -1187,6 +1190,57 @@ CSS FOR MUSIC DATABASE STARTS
   padding-top: 1em;
 }
 
+/* Playlist Buttons */
+.removeSongBtn,
+#createPlaylistBtn,
+#deletePlaylistBtn,
+#addToPlaylistBtn,
+#savePlaylistsBtn {
+  display: inline-block;
+  background-color: #2a67c7;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5em 1em;
+  margin: 0.25em;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.removeSongBtn:hover,
+#createPlaylistBtn:hover,
+#deletePlaylistBtn:hover,
+#addToPlaylistBtn:hover,
+#savePlaylistsBtn:hover {
+  background-color: #1f4da0;
+  transform: translateY(-2px);
+}
+
+.removeSongBtn:focus,
+#createPlaylistBtn:focus,
+#deletePlaylistBtn:focus,
+#addToPlaylistBtn:focus,
+#savePlaylistsBtn:focus {
+  outline: 2px solid #0056b3;
+  outline-offset: 2px;
+}
+
+/* Optional: style the playlist-song blocks */
+.playlist-song {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.4em 0.6em;
+  margin: 0.3em 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.playlist-song:hover {
+  background-color: #e6f0ff;
+}
 
 /* 
 

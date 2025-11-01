@@ -22,13 +22,31 @@
 
                             <input type="text" id="songSearch" placeholder="Type a song name..." autocomplete="off">
                             <ul id="searchResults"></ul>
-                            
+
                             <p>Or filter through this list of all songs.</p>
 
                             <select id="songSelect"><option>Loading songs...</option></select>
 
                             <div id="result">Select a song to see its locations.</div>
                             <div id="embedContainer"></div>
+                            <button id="addToPlaylistBtn">Add to Playlist</button>
+
+                        </div>
+                    </div>
+
+                    <div class="text-box-container">
+                        <div class="text-item">
+
+                            <h3>Playlists</h3>
+                            <select id="playlistSelect">
+                            <option value="">-- Select a Playlist --</option>
+                            </select>
+                            <button id="createPlaylistBtn">Create Playlist</button>
+                            <button id="savePlaylistsBtn">Save Playlists</button>
+                            <button id="deletePlaylistBtn">Delete Playlist</button>
+
+                            <div id="playlistSongs"></div>
+
 
                         </div>
                     </div>

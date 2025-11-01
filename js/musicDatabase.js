@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => init());
 
+/* ------------------------ YAML Loading ------------------------ */
 async function loadYAML(url) {
   const res = await fetch(url);
   if (!res.ok) throw new Error(`Failed to load ${url}: ${res.status} ${res.statusText}`);
@@ -7,7 +8,17 @@ async function loadYAML(url) {
   return jsyaml.load(text);
 }
 
-// Handle both strings and objects with link
+async function loadPlaylists() {
+  try {
+    const data = await loadYAML('../resources/data/playlists.yml');
+    return data || {};
+  } catch (err) {
+    console.error('Error loading playlists:', err);
+    return {};
+  }
+}
+
+/* ------------------------ Music Database Helpers ------------------------ */
 function findSongLocationsWithTrack(songName, data) {
   const results = [];
   const boxes = data.boxes;
@@ -52,17 +63,29 @@ function getAllSongs(data) {
   return [...songSet].sort((a, b) => a.localeCompare(b));
 }
 
+/* ------------------------ Initialization ------------------------ */
 async function init() {
   try {
     const data = await loadYAML('../resources/data/music.yml');
+    const playlists = await loadPlaylists();
+    window.musicData = data; // add after loading music.yml
+
+    /* --- DOM elements --- */
     const select = document.getElementById('songSelect');
     const resultDiv = document.getElementById('result');
     const searchInput = document.getElementById('songSearch');
     const embedContainer = document.getElementById('embedContainer');
 
+    const playlistSelect = document.getElementById('playlistSelect');
+    const playlistSongsDiv = document.getElementById('playlistSongs');
+    const createPlaylistBtn = document.getElementById('createPlaylistBtn');
+    const deletePlaylistBtn = document.getElementById('deletePlaylistBtn');
+    const addToPlaylistBtn = document.getElementById('addToPlaylistBtn');
+    const savePlaylistsBtn = document.getElementById('savePlaylistsBtn');
+
+    /* --- Songs setup --- */
     const allSongs = getAllSongs(data);
 
-    // Populate dropdown
     select.innerHTML = '<option value="">-- Select a Song --</option>';
     allSongs.forEach(song => {
       const opt = document.createElement('option');
@@ -70,7 +93,6 @@ async function init() {
       select.appendChild(opt);
     });
 
-    // Dropdown selection
     select.addEventListener('change', () => {
       searchInput.value = '';
       hideSearchResults();
@@ -79,29 +101,175 @@ async function init() {
       showSongLocations(song, data, resultDiv, embedContainer);
     });
 
-    // Setup search box
     setupSearchBox(allSongs, data, select, resultDiv, embedContainer);
 
+    /* --- Playlist setup --- */
+    function updatePlaylistDropdown() {
+      playlistSelect.innerHTML = '<option value="">-- Select a Playlist --</option>';
+      Object.entries(playlists).forEach(([key, pl]) => {
+        const opt = document.createElement('option');
+        opt.value = key;
+        opt.textContent = pl.name;
+        playlistSelect.appendChild(opt);
+      });
+    }
+
+    function refreshPlaylistSongs() {
+      const key = playlistSelect.value;
+      if (!key) {
+        playlistSongsDiv.innerHTML = '';
+        return;
+      }
+      const pl = playlists[key];
+
+      // Build the song list with remove buttons
+      playlistSongsDiv.innerHTML = `<strong>${pl.name}</strong><br>` +
+        pl.songs.map((song, index) => `
+          <div class="playlist-song" draggable="true" data-index="${index}">
+            <span>${song}</span>
+            <button class="removeSongBtn" data-song="${song}">Remove</button>
+            <div class="playlist-embed" id="embed-${key}-${index}"></div>
+          </div>
+        `).join('');
+
+      // Attach remove button handlers
+      playlistSongsDiv.querySelectorAll('.removeSongBtn').forEach(btn => {
+        btn.addEventListener('click', () => removeSongFromPlaylist(key, btn.dataset.song));
+      });
+
+      // Attach drag-and-drop handlers
+      const items = playlistSongsDiv.querySelectorAll('.playlist-song');
+      let draggedIndex = null;
+
+      items.forEach(item => {
+        item.addEventListener('dragstart', e => {
+          draggedIndex = Number(item.dataset.index);
+          e.dataTransfer.effectAllowed = "move";
+        });
+
+        item.addEventListener('dragover', e => {
+          e.preventDefault();
+          e.dataTransfer.dropEffect = "move";
+        });
+
+        item.addEventListener('drop', e => {
+          e.preventDefault();
+          const targetIndex = Number(item.dataset.index);
+          if (draggedIndex === null || targetIndex === draggedIndex) return;
+
+          const temp = pl.songs[draggedIndex];
+          pl.songs.splice(draggedIndex, 1);
+          pl.songs.splice(targetIndex, 0, temp);
+          refreshPlaylistSongs();
+        });
+      });
+
+      // Add embeds for each song in the playlist
+      pl.songs.forEach((song, index) => {
+        const locations = findSongLocationsWithTrack(song, window.musicData); // musicData must be global
+        const links = locations.filter(l => l.link).map(l => l.link);
+        const embedDiv = document.getElementById(`embed-${key}-${index}`);
+        if (embedDiv) {
+          embedDiv.innerHTML = links.length ? links.map(generateEmbed).join('<br>') : '<em>No digital version available</em>';
+        }
+      });
+    }
+
+    function removeSongFromPlaylist(playlistKey, songName) {
+      const pl = playlists[playlistKey];
+      pl.songs = pl.songs.filter(s => s !== songName);
+      refreshPlaylistSongs();
+    }
+
+    function addSongToPlaylist(song) {
+      const key = playlistSelect.value;
+      if (!key) return alert('Select a playlist first.');
+      const pl = playlists[key];
+      if (!pl.songs.includes(song)) {
+        pl.songs.push(song);
+        refreshPlaylistSongs();
+      }
+    }
+
+    playlistSelect.addEventListener('change', refreshPlaylistSongs);
+
+    createPlaylistBtn.addEventListener('click', () => {
+      const name = prompt('Enter a name for the new playlist:');
+      if (!name) return;
+      const id = name.toLowerCase().replace(/\s+/g, '_');
+      if (playlists[id]) return alert('A playlist with this name already exists!');
+      playlists[id] = { name, songs: [] };
+      updatePlaylistDropdown();
+      playlistSelect.value = id;
+      refreshPlaylistSongs();
+    });
+
+    deletePlaylistBtn.addEventListener('click', async () => {
+      const key = playlistSelect.value;
+      if (!key) return;
+      if (!confirm(`Delete playlist "${playlists[key].name}"?`)) return;
+
+      delete playlists[key];          
+      updatePlaylistDropdown();        
+      playlistSongsDiv.innerHTML = ''; 
+
+      // Automatically save changes to server
+      try {
+        const res = await fetch('/api/save-playlists', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ playlists })
+        });
+        const data = await res.json();
+        if (data.success) {
+          alert('Playlist deleted and changes saved!');
+        } else {
+          alert('Playlist deleted locally, but failed to save to server: ' + (data.error || 'Unknown error'));
+        }
+      } catch (err) {
+        alert('Playlist deleted locally, but failed to save to server: ' + err.message);
+      }
+    });
+
+
+    addToPlaylistBtn.addEventListener('click', () => {
+      const song = select.value || searchInput.value;
+      if (!song) return alert('Select or search a song first.');
+      addSongToPlaylist(song);
+    });
+
+    savePlaylistsBtn.addEventListener('click', async () => {
+      try {
+        const res = await fetch('/api/save-playlists', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ playlists })
+        });
+        const data = await res.json();
+        if (data.success) alert('Playlists saved successfully!');
+        else alert('Failed to save playlists: ' + (data.error || 'Unknown error'));
+      } catch (err) {
+        alert('Error saving playlists: ' + err.message);
+      }
+    });
+
+    updatePlaylistDropdown();
+
   } catch (err) {
-    console.error('Error loading music data:', err);
+    console.error('Error loading music data or playlists:', err);
     document.getElementById('result').textContent = 'Failed to load music data. Check console.';
   }
 }
 
+/* ------------------------ Display Songs ------------------------ */
 function showSongLocations(song, data, resultDiv, embedContainer) {
   const locations = findSongLocationsWithTrack(song, data);
   if (locations.length) {
     resultDiv.innerHTML = `<strong>${song}</strong> found in:<br>` +
       locations.map(l => `• ${l.box}, ${l.disc}, Track ${l.track}`).join('<br>');
 
-    // Show embeds for all links if present
     const links = locations.filter(l => l.link).map(l => l.link);
-    if (links.length > 0) {
-      embedContainer.innerHTML = links.map(generateEmbed).join('<br><br>');
-    } else {
-      embedContainer.innerHTML = '<em>No digital version available</em>';
-    }
-
+    embedContainer.innerHTML = links.length ? links.map(generateEmbed).join('<br><br>') : '<em>No digital version available</em>';
   } else {
     resultDiv.textContent = `No locations found for "${song}".`;
     embedContainer.innerHTML = '';
@@ -111,33 +279,22 @@ function showSongLocations(song, data, resultDiv, embedContainer) {
 function generateEmbed(link) {
   if (!link) return '';
 
-  // YouTube embed
   if (link.includes('youtube.com') || link.includes('youtu.be')) {
-    let videoId = '';
-    if (link.includes('youtu.be')) {
-      videoId = link.split('/').pop();
-    } else {
-      videoId = link.split('v=')[1]?.split('&')[0];
-    }
+    let videoId = link.includes('youtu.be') ? link.split('/').pop() : link.split('v=')[1]?.split('&')[0];
     return `<iframe width="400" height="225" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
   }
 
-  // Spotify embed
   if (link.includes('spotify.com')) {
     let embedLink = link.replace('open.spotify.com', 'open.spotify.com/embed');
-    if (!embedLink.includes('/embed/')) {
-      embedLink = embedLink.replace('/track/', '/embed/track/');
-    }
+    if (!embedLink.includes('/embed/')) embedLink = embedLink.replace('/track/', '/embed/track/');
     return `<iframe src="${embedLink}" width="400" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-            <div style="font-size: 0.85em; color: #555; margin-bottom: 1em;">
-              Full playback requires a Spotify account
-            </div>`;
+            <div style="font-size: 0.85em; color: #555; margin-bottom: 1em;">Full playback requires a Spotify account</div>`;
   }
 
-  // Fallback for other links
   return `<a href="${link}" target="_blank">${link}</a>`;
 }
 
+/* ------------------------ Search ------------------------ */
 function hideSearchResults() {
   const list = document.getElementById('searchResults');
   if (list) list.style.display = 'none';
@@ -150,8 +307,6 @@ function setupSearchBox(allSongs, data, select, resultDiv, embedContainer) {
   searchInput.addEventListener('input', () => {
     const query = searchInput.value.trim().toLowerCase();
     resultsList.innerHTML = '';
-
-    // Clear dropdown when typing
     if (query.length > 0) select.value = '';
 
     if (!query) {
@@ -159,10 +314,7 @@ function setupSearchBox(allSongs, data, select, resultDiv, embedContainer) {
       return;
     }
 
-    const matches = allSongs.filter(song =>
-      song.toLowerCase().includes(query)
-    );
-
+    const matches = allSongs.filter(song => song.toLowerCase().includes(query));
     if (matches.length === 0) {
       resultsList.style.display = 'none';
       return;
@@ -183,8 +335,6 @@ function setupSearchBox(allSongs, data, select, resultDiv, embedContainer) {
   });
 
   document.addEventListener('click', (e) => {
-    if (!searchInput.contains(e.target) && !resultsList.contains(e.target)) {
-      resultsList.style.display = 'none';
-    }
+    if (!searchInput.contains(e.target) && !resultsList.contains(e.target)) resultsList.style.display = 'none';
   });
 }
