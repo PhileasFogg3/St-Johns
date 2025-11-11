@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const paginationContainer = document.getElementById("pagination-controls");
   if (!feedContainer || !paginationContainer) return;
 
-  const RSS_URL = "https://www.achurchnearyou.com/church/16065/news/feed/";
+  const RSS_URL = "https://www.achurchnearyou.com/church/33561/news/feed/";
   const ITEMS_PER_PAGE = 4;
   let currentPage = 1;
   let newsItems = [];
